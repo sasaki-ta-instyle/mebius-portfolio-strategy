@@ -1,11 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Slide } from "./Slide";
 import type { SlideData } from "@/lib/slides";
 
 const SLIDE_W = 1366;
 const SLIDE_H = 900;
+
+/**
+ * プレゼン全体の章構成（タイムライン用）。
+ * range は 1 始まりの [start, end] スライド番号。
+ */
+type Chapter = { label: string; range: [number, number] };
+const CHAPTERS: Chapter[] = [
+  { label: "INTRO", range: [1, 3] },
+  { label: "STRUCTURE", range: [4, 6] },
+  { label: "BRANDS", range: [7, 11] },
+  { label: "EC DESIGN", range: [12, 13] },
+  { label: "RISK / DECISIONS", range: [14, 15] },
+  { label: "POLICY", range: [16, 17] },
+  { label: "WHY REBRAND", range: [18, 24] },
+  { label: "EXECUTION", range: [25, 30] },
+  { label: "EC / ROADMAP", range: [31, 32] },
+  { label: "SUMMARY", range: [33, 33] },
+];
 
 export function SlideDeck({ deck }: { deck: SlideData[] }) {
   const [index, setIndex] = useState(0);
@@ -51,6 +69,12 @@ export function SlideDeck({ deck }: { deck: SlideData[] }) {
   }, [deck.length]);
 
   const current = deck[index];
+  const slideNo = index + 1;
+  const total = deck.length;
+  const activeChapter = useMemo(
+    () => CHAPTERS.findIndex((c) => slideNo >= c.range[0] && slideNo <= c.range[1]),
+    [slideNo],
+  );
 
   return (
     <main
@@ -66,6 +90,100 @@ export function SlideDeck({ deck }: { deck: SlideData[] }) {
         justifyContent: "center",
       }}
     >
+      {/* 章タイムライン（スケール対象外、画面実寸で常駐） */}
+      <nav
+        aria-label="章タイムライン"
+        className="deck-timeline"
+        style={{
+          position: "absolute",
+          top: 20,
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          alignItems: "stretch",
+          gap: 6,
+          background: "rgba(243,241,238,0.94)",
+          borderRadius: "var(--r-pill)",
+          padding: "10px 16px",
+          maxWidth: "calc(100vw - 40px)",
+          zIndex: 10,
+        }}
+      >
+        {CHAPTERS.map((ch, ci) => {
+          const span = ch.range[1] - ch.range[0] + 1;
+          const isActive = ci === activeChapter;
+          const isPast = ci < activeChapter;
+          return (
+            <button
+              key={ch.label}
+              type="button"
+              onClick={() => setIndex(ch.range[0] - 1)}
+              aria-label={`${ch.label} へ移動`}
+              aria-current={isActive ? "step" : undefined}
+              style={{
+                background: "transparent",
+                border: "none",
+                padding: "2px 4px",
+                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "stretch",
+                gap: 4,
+                minWidth: Math.max(28, span * 10),
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 9,
+                  letterSpacing: "0.08em",
+                  textAlign: "left",
+                  color: isActive
+                    ? "var(--color-text)"
+                    : isPast
+                    ? "var(--color-text-muted)"
+                    : "var(--color-text-light)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {ch.label}
+              </span>
+              <span
+                aria-hidden
+                style={{
+                  display: "flex",
+                  gap: 2,
+                  height: 4,
+                }}
+              >
+                {Array.from({ length: span }).map((_, si) => {
+                  const slideIdx = ch.range[0] + si;
+                  const filled = slideIdx <= slideNo;
+                  const onCurrent = slideIdx === slideNo;
+                  return (
+                    <span
+                      key={si}
+                      style={{
+                        flex: 1,
+                        background: onCurrent
+                          ? "var(--color-text)"
+                          : filled
+                          ? "var(--color-text-muted)"
+                          : "var(--color-surface-3, #d8d3c8)",
+                        borderRadius: 2,
+                        transform: onCurrent ? "scaleY(1.4)" : "scaleY(1)",
+                        transformOrigin: "center",
+                        transition: "background 0.2s, transform 0.2s",
+                      }}
+                    />
+                  );
+                })}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+
       <div
         className="deck-stage-screen"
         style={{
