@@ -2,7 +2,10 @@ import type { SlideData } from "@/lib/slides";
 import { TwoCol, Card, DefList, Matrix, Strength, BigStat } from "./slide-parts";
 
 /* ============================================================
- * メビウス製薬 ブランドポートフォリオ戦略 デッキ（全 26 スライド）
+ * メビウス製薬 ブランドポートフォリオ戦略 デッキ（全 33 スライド）
+ *   #01-#17 ：ポートフォリオ全体 / ブランド定義 / EC 設計 / 方針転換
+ *   #18-#24 ：SIMIUS リブランド WHY（章扉 / 4 軸 / カウンターファクチュアル）
+ *   #25-#33 ：SIMIUS / TRIPURE / 出口 / EC 導線 / ロードマップ / サマリ
  * ============================================================ */
 
 export const deck: SlideData[] = [
@@ -562,7 +565,269 @@ export const deck: SlideData[] = [
     footnote: "出口設計は「安売り」ではなく、限定セット / トライアル / シーズナル / 会員限定オファーで動かす。",
   },
 
-  /* ---------- 18 SIMIUS：順次リブランディング ---------- */
+  /* ---------- 18 WHY 章扉：なぜ今 SIMIUS をリブランドするのか ---------- */
+  {
+    id: "18-why-cover",
+    variant: "chapter",
+    eyebrow: "SIMIUS  ·  WHY REBRAND",
+    title: "なぜ今、SIMIUS を作り直すのか。",
+    lead: [
+      "Shopify Plus への移行で、運用効率と広告 CPA は確かに改善した。",
+      "次は、ブランド資産そのものを更新する番。",
+      "全否定でも、急ハンドルでもない。順次刷新の根拠を、4 つの角度から示す。",
+    ],
+    footnote: "旧パッケージ・既存定期は維持。新商品と追加在庫から段階的に上書きする前提。",
+  },
+
+  /* ---------- 19 WHY オーバービュー：4 つの根拠を 1 枚で ---------- */
+  {
+    id: "19-why-overview",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  OVERVIEW",
+    title: "4 つの根拠を、1 枚で。",
+    lead: "順番に「内部・外部・市場・経営」の 4 軸で SIMIUS の現在地を見る。",
+    children: (
+      <Matrix
+        head={["軸", "起きていること", "リブランドで取り戻すもの"]}
+        rows={[
+          [
+            { tag: "dark", text: "内部" },
+            "DR 訴求の反復と汎用化したミニマル表現で、ブランドの輪郭が薄れている",
+            "「続けられる確かさ」を主語にした語り",
+          ],
+          [
+            { tag: "dark", text: "外部" },
+            "同価格帯の棚で、競合の世界観水準が一段上昇",
+            "並んだときに選ばれる、品位とテクスチャ",
+          ],
+          [
+            { tag: "dark", text: "市場" },
+            "既存顧客は静かに歳を取り、新規は DR で入りにくい",
+            "指名想起と、続ける理由の再提示",
+          ],
+          [
+            { tag: "dark", text: "経営" },
+            "公式通販の表札のままで、ポートフォリオ転換が進まない",
+            "MEBIUS 編集母体への接続条件",
+          ],
+        ]}
+      />
+    ),
+    footnote: "各根拠は次の 4 枚で個別に展開する。",
+  },
+
+  /* ---------- 20 WHY 1/4 内部要因：DR 訴求の摩耗 ---------- */
+  {
+    id: "20-why-dr-fatigue",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  1 / 4  ·  内部要因",
+    title: "DR 訴求の摩耗：価格と効能の反復に寄りすぎ、ブランドの記憶が積み上がりにくい。",
+    children: (
+      <TwoCol
+        ratio="1fr 1fr"
+        left={
+          <Card
+            title="観察される傾向"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>初回 ¥1,980 → 通常 ¥5,217 の価格差訴求が、長期にわたり継続</li>
+                <li>「シミ・年齢肌」への効能訴求の反復に、LP が依存</li>
+                <li>白黒ミニマルが業界全体に拡散し、識別性が下がっている</li>
+                <li>UV 美容液 ¥2,903、フェイスパウダー ¥4,400 など周辺商品の世界観がバラついている</li>
+              </ul>
+            }
+          />
+        }
+        right={
+          <Card
+            tone="surface-2"
+            title="ブランド側に出ている影響"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>既存顧客が「使い続ける理由」を商品ページで再確認できない</li>
+                <li>新規にとって、他の DR ブランドとの差が伝わらない</li>
+                <li>打ち手が価格訴求と広告効率調整に偏り、ブランド資産が積み上がりにくい</li>
+                <li>実績・処方・継続理由といった証拠が、ページ全体の文脈の中で機能していない</li>
+              </ul>
+            }
+          />
+        }
+      />
+    ),
+    footnote: "DR を捨てるのではない。証拠と価格設計は残し、語り順を入れ替える。",
+  },
+
+  /* ---------- 21 WHY 2/4 外部要因：棚の品位インフレ ---------- */
+  {
+    id: "21-why-shelf-inflation",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  2 / 4  ·  外部要因",
+    title: "同価格帯の棚では、世界観の水準が一段上がっている。",
+    children: (
+      <TwoCol
+        ratio="1.05fr 1fr"
+        left={
+          <Card
+            title="近接ゾーンで見える動き（公開情報の範囲）"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>ロート製薬（オバジ / メラノCC）— 成分軸の編集を強化</li>
+                <li>富士フイルム（アスタリフト）— テクノロジー軸の打ち出し</li>
+                <li>オルビス（ユー / ディフェンセラ）— エイジング × 体内ケアの組み立て</li>
+                <li>ファンケル（ホワイトニング）— 安心と効能の編集表現</li>
+                <li>DECENCIA / d プログラム ほか敏感肌系 — 表現密度の上昇</li>
+              </ul>
+            }
+          />
+        }
+        right={
+          <Card
+            tone="surface-2"
+            title="共通する変化"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>ブランドサイト・パッケージ・PDP の表現密度が、過去数年で一段上がっている</li>
+                <li>「薬用 × 世界観」「成分 × 物語」の両立が、棚の標準になりつつある</li>
+                <li>SIMIUS は依然として「DR 系公式通販の表札」表現に留まる</li>
+                <li>結果、同価格帯で並べたときに選ばれにくくなる</li>
+              </ul>
+            }
+          />
+        }
+      />
+    ),
+    footnote: "具体的な競合比較は別資料。本資料では棚位置の構造のみを示す。",
+  },
+
+  /* ---------- 22 WHY 3/4 市場要因：顧客と SNS の重心移動 ---------- */
+  {
+    id: "22-why-customer-shift",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  3 / 4  ·  市場要因",
+    title: "既存顧客はゆるやかに年齢を重ね、新規は DR だけでは入りにくくなっている。",
+    children: (
+      <TwoCol
+        ratio="1fr 1fr"
+        left={
+          <Card
+            title="既存顧客側の前提（想定）"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>主要顧客層は年単位でゆるやかに年齢を重ねていると見られる</li>
+                <li>「続けやすさ」「信じられる根拠」「セット提案」への要求が高まる</li>
+                <li>初回限定 ¥1,980 の説得力は、継続層には弱い</li>
+                <li>定期継続の理由づけが、価格以外で必要になっている</li>
+              </ul>
+            }
+          />
+        }
+        right={
+          <Card
+            tone="surface-2"
+            title="新規流入側の前提（想定）"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>SNS / 動画 / 成分検索 / インフルエンサー比較に重心が移動</li>
+                <li>DR 検索広告 → LP の単線フローでは、新規が入りにくくなっている</li>
+                <li>指名検索の入口が、世代単位で弱くなっている</li>
+                <li>TRIPURE が SNS 新規を担う前提でも、SIMIUS には別の入口理由が必要</li>
+              </ul>
+            }
+          />
+        }
+      />
+    ),
+    footnote: "数値は内部データの確認が前提。本資料は構造として示す。",
+  },
+
+  /* ---------- 23 WHY 4/4 経営要因：ポートフォリオ整合性 ---------- */
+  {
+    id: "23-why-portfolio",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  4 / 4  ·  経営要因",
+    title: "MEBIUS 編集母体に切り替える前提条件として、SIMIUS の表札を更新する。",
+    children: (
+      <TwoCol
+        ratio="1fr 1fr"
+        left={
+          <Card
+            title="推奨案で目指す姿（#05）"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>EC 母体 = MEBIUS、各ブランドは独立した役割で並べる</li>
+                <li>SIMIUS は「DR 資産の中核」として残す</li>
+                <li>TRIPURE / UPTIS / AWAI / STYLE HOMME はそれぞれ独立した役割を持つ</li>
+                <li>5 ブランドの役割分担（#06）が、現場と顧客の両方に伝わる</li>
+              </ul>
+            }
+          />
+        }
+        right={
+          <Card
+            tone="surface-2"
+            title="SIMIUS が現状のままだと起きること"
+            body={
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+                <li>公式通販の「表札」が SIMIUS のままだと、MEBIUS が編集母体に見えない</li>
+                <li>TRIPURE / UPTIS / AWAI / STYLE HOMME が SIMIUS の派生に見える</li>
+                <li>5 ブランドの役割分担が、現場にも顧客にも伝わらない</li>
+                <li>ひいては、ポートフォリオ転換そのものが進まない</li>
+              </ul>
+            }
+          />
+        }
+      />
+    ),
+    footnote: "順番として、SIMIUS の表札更新が先。MEBIUS 母体の立ち上げはその後。",
+  },
+
+  /* ---------- 24 WHY カウンターファクチュアル：何もしないと、こう摩耗する ---------- */
+  {
+    id: "24-why-counterfactual",
+    eyebrow: "SIMIUS  ·  WHY REBRAND  ·  COUNTERFACTUAL",
+    title: "何もしないと、SIMIUS はこう摩耗する。",
+    lead: "リブランドを先送りした場合に、時間軸ごとに観察されると想定される変化。",
+    children: (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginTop: 4 }}>
+        {[
+          {
+            n: "短期",
+            t: "広告効率は維持。獲得単価は緩やかに悪化。",
+            d: "DR の打ち手はまだ効く。ただし、媒体側の最適化余地は徐々に痩せる。",
+          },
+          {
+            n: "中期",
+            t: "棚の格差が、静かに広がる。",
+            d: "同価格帯の競合が世界観を一段上げ続け、相対的な選ばれにくさが進む。",
+          },
+          {
+            n: "中期",
+            t: "TRIPURE を伸ばすほど、分断が見える。",
+            d: "若い顔の TRIPURE と、表札のままの SIMIUS との間に、ブランド体験の段差が出る。",
+          },
+          {
+            n: "長期",
+            t: "打ち手の余地が、徐々に狭まる。",
+            d: "薬機ガイドラインや表現規制が見直された場合、価格・効能の反復型訴求は調整余地が小さい。",
+          },
+        ].map((s, i) => (
+          <Card
+            key={i}
+            tone={i === 3 ? "surface-2" : "surface"}
+            body={
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, height: "100%" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--color-text-muted)" }}>
+                  {s.n}
+                </span>
+                <p style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: 18, lineHeight: 1.45 }}>{s.t}</p>
+                <p style={{ margin: "auto 0 0", fontSize: 12, color: "var(--color-text-muted)", lineHeight: 1.7 }}>
+                  {s.d}
+                </p>
+              </div>
+            }
+          />
+        ))}
+      </div>
+    ),
+    footnote: "順次刷新は「やる / やらない」ではなく、「いつ始めるか」の問題。",
+  },
+
+  /* ---------- 25 SIMIUS：順次リブランディング ---------- */
   {
     id: "18-simius-rebrand",
     eyebrow: "SIMIUS  ·  REBRAND DIRECTION",
